@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BlockBow
+﻿namespace BlockBow
 {
-    enum GameStatus
+    internal enum GameStatus
     {
         playing,
         shot,

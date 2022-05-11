@@ -55,30 +55,30 @@ namespace BlockBow
 
         private void DrawTarget(PaintEventArgs e)
         {
-             e.Graphics.DrawImage(model.target.imgTarget, new Point(model.target.x, model.target.y));
+            e.Graphics.DrawImage(model.target.ImgTarget, new Point(model.target.X, model.target.Y));
         }
- 
+
         private void DrawArrow(PaintEventArgs e)
         {
-             Point a = new Point((int)model.arrow.x, (int)model.arrow.y);
-             Point b = new Point((int)model.arrow.n1, (int)model.arrow.m1);
-             Point c = new Point((int)model.arrow.a, (int)model.arrow.b);
-             Point[] bO = { a, b, c };//рисуем по трем точкам что бы можно было повернуть картинку на любой угол
-             e.Graphics.DrawImage(model.arrow.arrowImg, bO);
+            Point a = new Point((int)model.arrow.x, (int)model.arrow.y);
+            Point b = new Point((int)model.arrow.n1, (int)model.arrow.m1);
+            Point c = new Point((int)model.arrow.a, (int)model.arrow.b);
+            Point[] bO = { a, b, c };//рисуем по трем точкам что бы можно было повернуть картинку на любой угол
+            e.Graphics.DrawImage(model.arrow.arrowImg, bO);
         }
 
 
-void start() 
-{
-    while (model.gameStatus == GameStatus.shot)//прекращает работу когда кнопку мыши отпустят
-    {
-        timer.Start();//таймер каждый промежуток времени меняет и перерисовывает угол лука и тетивы
-    }
-    timer.Stop();
-}
-void shot(object source, System.Timers.ElapsedEventArgs e)
-{
-            
+        void start()
+        {
+            while (model.gameStatus == GameStatus.shot)//прекращает работу когда кнопку мыши отпустят
+            {
+                timer.Start();//таймер каждый промежуток времени меняет и перерисовывает угол лука и тетивы
+            }
+            timer.Stop();
+        }
+        void shot(object source, System.Timers.ElapsedEventArgs e)
+        {
+
             shotActiveX = Control.MousePosition.X;
             shotActiveY = Control.MousePosition.Y;
             //сила натяжения тетивы
@@ -93,20 +93,20 @@ void shot(object source, System.Timers.ElapsedEventArgs e)
             model.arrow.KoopA(model.angleTurn, model.bow.Cx, model.bow.Cy);
         }
 
-private void View_MouseDown(object sender, MouseEventArgs e)
-{
-    shotStartX = Control.MousePosition.X;
-    shotStartY = Control.MousePosition.Y;
-    model.arrow = new Arrow(model.xArrow, model.yArrow);//создается новый обьект стрелы и вкладывается в лук
-    shotThread = new Thread(start);
-    model.gameStatus = GameStatus.shot;
-    
-    shotThread.Start();
-    Invalidate();
-}
+        private void View_MouseDown(object sender, MouseEventArgs e)
+        {
+            shotStartX = Control.MousePosition.X;
+            shotStartY = Control.MousePosition.Y;
+            model.arrow = new Arrow(model.xArrow, model.yArrow);//создается новый обьект стрелы и вкладывается в лук
+            shotThread = new Thread(start);
+            model.gameStatus = GameStatus.shot;
 
-private void View_MouseUp(object sender, MouseEventArgs e)
-{
+            shotThread.Start();
+            Invalidate();
+        }
+
+        private void View_MouseUp(object sender, MouseEventArgs e)
+        {
             model.gameStatus = GameStatus.playing;
             model.x1 = shotStartX; model.y1 = shotStartY;//в модель передается начальные координаты зажатия мыши
             model.x2 = shotActiveX; model.y2 = shotActiveY;//и конечные координаты
@@ -114,6 +114,6 @@ private void View_MouseUp(object sender, MouseEventArgs e)
             modelPlay = new Thread(model.play);
             modelPlay.Start();
             Invalidate();
-}
-}
+        }
+    }
 }

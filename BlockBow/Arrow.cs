@@ -4,18 +4,18 @@ using System.Timers;
 
 namespace BlockBow
 {
-    class Arrow
+    internal class Arrow
     {
         //первоначальные координаты
         public double Cx, Cy, y0;
 
-        public double yArrow, xArrow, M, N, A, B;
-        
-        double V, t = 0;
-        double angle;
+        private double yArrow, xArrow, M, N, A, B;
+        private double V, t = 0;
+        private double angle;
         private const double m = 0.026;
         private const double g = 9.8;
         double turn;
+
         public double x, y, n1, m1, a, b, L;
         
         public Bitmap arrowImg = new Bitmap(Properties.Resources.Arrow);
@@ -24,8 +24,15 @@ namespace BlockBow
         public Arrow(double x, double y)
         {
             
-            this.xArrow = x; this.yArrow = y;
-            this.x = xArrow; this.y = yArrow; n1 = this.xArrow + 79; m1 = this.yArrow; a = this.xArrow; b = this.yArrow + 5;
+            this.xArrow = x; 
+            this.yArrow = y;
+
+            this.x = xArrow; 
+            this.y = yArrow; 
+            n1 = this.xArrow + 79; 
+            m1 = this.yArrow; 
+            a = this.xArrow; 
+            b = this.yArrow + 5;
             arrowImg.MakeTransparent();
         }
         public Arrow(double x, double y, double V, double angle)

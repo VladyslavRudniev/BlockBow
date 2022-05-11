@@ -1,19 +1,21 @@
-﻿
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace BlockBow
 {
-    class Target
+    internal class Target
     {
-        public Bitmap imgTarget = new Bitmap(Properties.Resources.Target);
-        public int x, y;
+        public Bitmap ImgTarget { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public Target() : this(0, 0) { }
         public Target(int x, int y)
         {
-            
-            this.x = x;
-            this.y = y;
-            imgTarget.MakeTransparent();
+            this.X = x;
+            this.Y = y;
+            ImgTarget = new Bitmap(Properties.Resources.Target);
+            ImgTarget.MakeTransparent();
         }
         
         public void Message()
