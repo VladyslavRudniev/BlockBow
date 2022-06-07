@@ -79,7 +79,7 @@ namespace BlockBow
             xlc = 45;
         }
         //вычисление дисперсии
-        public double duspers()
+        public double Duspers()
         {
             double dusper = 0;
             if (sight == true & stabilizer == true)

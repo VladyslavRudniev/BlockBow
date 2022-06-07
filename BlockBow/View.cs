@@ -17,7 +17,7 @@ namespace BlockBow
             InitializeComponent();
             this.model = model;
             timer = new System.Timers.Timer();
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(shot);
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(Shot);
             timer.Interval = 50;
         }
 
@@ -68,7 +68,7 @@ namespace BlockBow
         }
 
 
-        void start()
+        void Start()
         {
             while (model.gameStatus == GameStatus.shot)//прекращает работу когда кнопку мыши отпустят
             {
@@ -76,17 +76,17 @@ namespace BlockBow
             }
             timer.Stop();
         }
-        void shot(object source, System.Timers.ElapsedEventArgs e)
+        void Shot(object source, System.Timers.ElapsedEventArgs e)
         {
 
             shotActiveX = Control.MousePosition.X;
             shotActiveY = Control.MousePosition.Y;
             //сила натяжения тетивы
-            if (model.l(shotStartX, shotStartY, shotActiveX, shotActiveY) <= 45) model.L = (int)model.l(shotStartX, shotStartY, shotActiveX, shotActiveY); else model.L = 45;
+            if (model.CalculationL(shotStartX, shotStartY, shotActiveX, shotActiveY) <= 45) model.L = (int)model.CalculationL(shotStartX, shotStartY, shotActiveX, shotActiveY); else model.L = 45;
             model.bow.L = model.L;
             model.arrow.L = model.L;
             //угол между двумя точками
-            model.angleTurn = 270 + (90 - (model.angle(shotStartX, shotStartY, shotActiveX, shotActiveY) - 90));
+            model.angleTurn = 270 + (90 - (model.CalculationAngle(shotStartX, shotStartY, shotActiveX, shotActiveY) - 90));
             //вычисление координат лука, тетивы и стрелы
             model.bow.Koop(model.angleTurn);
             model.bow.KoopL(model.angleTurn);
@@ -98,7 +98,7 @@ namespace BlockBow
             shotStartX = Control.MousePosition.X;
             shotStartY = Control.MousePosition.Y;
             model.arrow = new Arrow(model.xArrow, model.yArrow);//создается новый обьект стрелы и вкладывается в лук
-            shotThread = new Thread(start);
+            shotThread = new Thread(Start);
             model.gameStatus = GameStatus.shot;
 
             shotThread.Start();
@@ -111,7 +111,7 @@ namespace BlockBow
             model.x1 = shotStartX; model.y1 = shotStartY;//в модель передается начальные координаты зажатия мыши
             model.x2 = shotActiveX; model.y2 = shotActiveY;//и конечные координаты
 
-            modelPlay = new Thread(model.play);
+            modelPlay = new Thread(model.Play);
             modelPlay.Start();
             Invalidate();
         }

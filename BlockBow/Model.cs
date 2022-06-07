@@ -51,14 +51,14 @@ namespace BlockBow
         }
         
         //функция, вычисляющая силу натяжения тетивы
-        public double l(int x1, int y1, int x2, int y2)
+        public double CalculationL(int x1, int y1, int x2, int y2)
         {
             double l  = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
             return l;
         }
 
         //вычисляет угол между координатами событий нажатия мыши и текущим положением курсора
-        public double angle(int x1, int y1, int x2, int y2)
+        public double CalculationAngle(int x1, int y1, int x2, int y2)
         {
             double angle = Math.Atan2(y2 - y1, x2 - x1) / Math.PI * 180;
             angle = (angle < 0) ? angle + 360 : angle;
@@ -66,23 +66,23 @@ namespace BlockBow
         }
 
         //рандомное вычисление угла отклонения стрелы из за дрожания рук
-        public double angleSlon()
+        public double CalculationAngleSlon()
         {
             double angleSlon;
-            int dusp = (int)bow.duspers();
+            int dusp = (int)bow.Duspers();
             angleSlon = rand.Next(0, dusp * 2) - dusp;
             return angleSlon;
         }
 
         //управление процессом полета стрели и попадания её в мишень
-        public void play()
+        public void Play()
         {
             //вызывается конструктор лука, для того что бы вернуть его в исходное положение
             bow = new Bow(geometryHand, lenghtBow, baseSize, pullingForce, weight, sight, stabilizer, yB, angleTurn, xl1, yl1, xl2, yl2, xlc, ylc);
             //учитывая силу натяжения вычисляется скорость полета стрелы
-            if (l(x1, y1, x2, y2) * 2 <= 100)
+            if (CalculationL(x1, y1, x2, y2) * 2 <= 100)
             {
-                L = (int)l(x1, y1, x2, y2);
+                L = (int)CalculationL(x1, y1, x2, y2);
                 V = L * 2;
             }
             else
@@ -91,7 +91,7 @@ namespace BlockBow
                 L = 45; 
             }
             //вызов конструктора стрелы которому передаются параметры для вычисления траектории  
-            arrow = new Arrow(xArrow, yArrow, V, angleTurn - 270 - angleSlon());
+            arrow = new Arrow(xArrow, yArrow, V, angleTurn - 270 - CalculationAngleSlon());
             
             timer.Elapsed += new ElapsedEventHandler(arrow.Trajectory);
             timer.Interval = 1;
